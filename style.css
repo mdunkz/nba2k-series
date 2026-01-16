@@ -1,45 +1,42 @@
 body { font-family: 'Arial Black', sans-serif; background: #0f0f0f; color: white; text-align: center; margin: 0; }
 header { background: #1a1a1a; padding: 20px; border-bottom: 4px solid #ff9800; }
-h1 { color: #ff9800; margin: 0; }
-#gameNumberLabel { color: #888; font-size: 0.9rem; letter-spacing: 2px; }
+h1 { color: #ff9800; margin: 0; font-size: 1.5rem; }
+#gameNumberLabel { color: #888; font-size: 0.8rem; letter-spacing: 2px; }
 
-.scoreboard { margin: 20px auto; background: rgba(255,152,0,0.1); padding: 15px; border-radius: 10px; display: inline-block; }
-#scoreDisplay { font-size: 4rem; margin: 5px 0; color: #ff9800; text-shadow: 0 0 15px rgba(255,152,0,0.5); }
+.scoreboard { margin: 15px auto; background: rgba(255,152,0,0.1); padding: 10px; border-radius: 10px; display: inline-block; }
+#scoreDisplay { font-size: 3rem; margin: 0; color: #ff9800; }
 
-/* TAB SYSTEM */
-.tab-system { margin: 15px 0; display: flex; justify-content: center; gap: 10px; }
-.tab-btn { background: #222; color: #888; border: 1px solid #444; padding: 10px 20px; cursor: pointer; }
+.tab-system { display: flex; justify-content: center; gap: 5px; margin: 10px 0; }
+.tab-btn { background: #222; color: #888; border: 1px solid #444; padding: 8px 12px; font-size: 0.8rem; cursor: pointer; }
 .tab-btn.active { background: #ff9800; color: black; font-weight: bold; }
 
-/* PLAYER CARDS & STATUS */
-.players { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px; }
-.player-card { background: #1e1e1e; padding: 20px; border-radius: 15px; width: 320px; }
-.status-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; text-transform: uppercase; }
-.home-bg { background-color: #ff9800; color: black; font-weight: bold; }
-.away-bg { background-color: #444; color: #bbb; }
+.player-card { background: #1e1e1e; padding: 15px; border-radius: 15px; width: 280px; margin: 10px auto; border: 1px solid #333; }
+.status-badge { font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
+.home-bg { background: #ff9800; color: black; }
+.away-bg { background: #444; color: #bbb; }
 
-.streak-label { font-size: 0.85rem; display: block; margin-top: 5px; font-weight: 800; }
-.streak-win { color: #4CAF50 !important; }
-.streak-loss { color: #f44336 !important; }
+.streak-label { font-size: 0.9rem; margin-top: 5px; font-weight: 900; }
+.streak-win { color: #4CAF50; }
+.streak-loss { color: #f44336; }
 
-.wheel { height: 220px; background: #000; border: 5px solid #333; border-radius: 10px; margin: 15px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.home-team-border { border-color: #ff9800 !important; box-shadow: 0 0 20px rgba(255,152,0,0.3); }
+.wheel { height: 180px; background: #000; border: 4px solid #333; border-radius: 10px; margin: 10px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.home-team-border { border-color: #ff9800 !important; box-shadow: 0 0 10px #ff980055; }
 
-/* BUTTONS */
-button { border: none; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-.spin-main { background: #ff9800; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; margin: 20px; }
-.win-btn { background: #4CAF50; color: white; width: 100%; padding: 12px; margin-top: 10px; font-size: 1rem; }
-.controls button { width: 48%; padding: 8px; font-size: 0.8rem; }
+.win-btn { background: #4CAF50; color: white; width: 100%; padding: 10px; border-radius: 5px; font-weight: bold; margin-top: 10px; }
+.list-toggle-btn { background: none; color: #888; border: 1px solid #444; font-size: 0.7rem; padding: 5px; }
 
-/* SUICIDE MODE */
-#suicideOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 999; }
-.suicide-active { display: flex !important; animation: suicideFlash 0.1s infinite; }
-@keyframes suicideFlash { 0% { background: rgba(255,0,0,0.8); } 50% { background: rgba(0,0,0,0.8); } 100% { background: rgba(255,0,0,0.8); } }
-.skull-icon { font-size: 200px; }
+/* PROFILES */
+.profile-container { max-width: 400px; margin: auto; padding: 15px; }
+#playerSelect { width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #ff9800; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+.stat-card { background: #222; padding: 10px; border-radius: 8px; border-left: 3px solid #ff9800; text-align: left; }
+.stat-card label { font-size: 0.6rem; color: #888; }
+.stat-card h3 { margin: 2px 0; font-size: 1.2rem; color: #ff9800; }
 
-/* HISTORY TABLE */
-.history-container { max-width: 900px; margin: auto; padding: 20px; }
-#historyTable { width: 100%; border-collapse: collapse; background: #1a1a1a; }
-#historyTable th, #historyTable td { padding: 12px; border: 1px solid #333; font-size: 0.8rem; }
-.history-filters button { background: #222; color: white; margin: 5px; padding: 5px 10px; }
-.history-filters button.active { background: #ff9800; color: black; }
+/* MODAL & SUICIDE Same as before... */
+#teamListModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; }
+.modal-content { background:#1a1a1a; width:85%; max-width:350px; margin:40px auto; padding:15px; border:1px solid #ff9800; height: 75vh; display: flex; flex-direction: column; }
+#fullTeamList { list-style:none; padding:0; overflow-y:auto; text-align:left; font-size: 0.8rem; }
+#suicideOverlay { position: fixed; top:0; left:0; width:100%; height:100%; display:none; justify-content:center; align-items:center; z-index:999; pointer-events:none; }
+.suicide-active { display:flex !important; animation: suicideFlash 0.1s infinite; }
+@keyframes suicideFlash { 0% { background: rgba(255,0,0,0.5); } 100% { background: rgba(0,0,0,0.5); } }
