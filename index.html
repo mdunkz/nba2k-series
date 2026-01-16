@@ -31,7 +31,7 @@
             <button onclick="showTab('profiles')" id="profilesBtn" class="tab-btn">Profiles</button>
         </nav>
         
-        <button class="list-toggle-btn" onclick="toggleTeamList()">📋 Valid Team Names</button>
+        <button class="list-toggle-btn" onclick="toggleTeamList()">📋 View Valid Team Names</button>
     </header>
 
     <div id="liveTab" class="tab-content">
@@ -74,7 +74,7 @@
                 <button onclick="filterHistory('all')" id="filter_all" class="active">All</button>
             </div>
             <table id="historyTable">
-                <thead><tr><th>Date</th><th>Match</th><th>Winner</th><th>Game Info</th><th>Series</th></tr></thead>
+                <thead><tr><th>Date</th><th>Matchup</th><th>Winner</th><th>Game Info</th><th>Series</th></tr></thead>
                 <tbody id="historyBody"></tbody>
             </table>
         </div>
@@ -83,21 +83,25 @@
     <div id="profilesTab" class="tab-content" style="display:none;">
         <div class="profile-container">
             <select id="playerSelect" onchange="loadPlayerProfile()">
-                <option value="">Choose Player...</option>
+                <option value="">Select a Player...</option>
                 <option value="Mikey">Mikey</option>
                 <option value="Zach">Zach</option>
                 <option value="Jake">Jake</option>
             </select>
-            <div id="profileStats" style="display:none;">
+
+            <div id="profileStats" style="display:none; margin-top:20px;">
                 <div class="stat-grid">
-                    <div class="stat-card"><label>Record</label><h3 id="statTotalRecord">0-0</h3></div>
+                    <div class="stat-card"><label>All-Time Record</label><h3 id="statTotalRecord">0-0</h3></div>
                     <div class="stat-card"><label>Win %</label><h3 id="statWinPct">0%</h3></div>
-                    <div class="stat-card"><label>Home</label><h3 id="statHomeRecord">0-0</h3></div>
-                    <div class="stat-card"><label>Away</label><h3 id="statAwayRecord">0-0</h3></div>
-                    <div class="stat-card"><label>Avg PPG</label><h3 id="statAvgFor">0.0</h3></div>
-                    <div class="stat-card"><label>Avg Opp</label><h3 id="statAvgAgainst">0.0</h3></div>
+                    <div class="stat-card"><label>Home Record</label><h3 id="statHomeRecord">0-0</h3></div>
+                    <div class="stat-card"><label>Away Record</label><h3 id="statAwayRecord">0-0</h3></div>
+                    <div class="stat-card"><label>Avg Points For</label><h3 id="statAvgFor">0.0</h3></div>
+                    <div class="stat-card"><label>Avg Points Against</label><h3 id="statAvgAgainst">0.0</h3></div>
                 </div>
-                <div class="h2h-section"><h4>Head-to-Head</h4><div id="h2hList"></div></div>
+                <div class="h2h-section">
+                    <h4>Head-to-Head Breakdown</h4>
+                    <div id="h2hList"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -105,7 +109,7 @@
     <div id="teamListModal">
         <div class="modal-content">
             <h3>Valid Team Names</h3>
-            <input type="text" id="teamSearch" placeholder="Search..." onkeyup="searchTeams()">
+            <input type="text" id="teamSearch" placeholder="Search teams..." onkeyup="searchTeams()">
             <ul id="fullTeamList"></ul>
             <button onclick="toggleTeamList()" style="background:#ff4444; width:100%; padding:10px; margin-top:10px; color:white;">Close</button>
         </div>
