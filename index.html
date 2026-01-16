@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA 2K26 Series Tracker</title>
+    <title>NBA 2K26 Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="suicideOverlay">
-        <div class="skull-icon">☠️</div>
-    </div>
+    <div id="suicideOverlay"><div class="skull-icon">☠️</div></div>
 
     <header>
         <h1>NBA 2K26 SERIES</h1>
@@ -28,9 +26,12 @@
         </div>
 
         <nav class="tab-system">
-            <button onclick="showTab('live')" id="liveBtn" class="tab-btn active">Live Tracker</button>
-            <button onclick="showTab('history')" id="historyBtn" class="tab-btn">Game History</button>
+            <button onclick="showTab('live')" id="liveBtn" class="tab-btn active">Live</button>
+            <button onclick="showTab('history')" id="historyBtn" class="tab-btn">History</button>
+            <button onclick="showTab('profiles')" id="profilesBtn" class="tab-btn">Profiles</button>
         </nav>
+        
+        <button class="list-toggle-btn" onclick="toggleTeamList()">📋 Valid Team Names</button>
     </header>
 
     <div id="liveTab" class="tab-content">
@@ -42,32 +43,20 @@
 
             <section class="players">
                 <div class="player-card">
-                    <h3>
-                        <span id="p1Name">Mikey</span> 
-                        <span id="p1Status" class="status-badge"></span>
-                        <div id="p1Streak" class="streak-label"></div>
-                    </h3>
-                    <div class="wheel" id="p1Wheel">
-                        <div class="placeholder-text">Spin to start</div>
-                    </div>
+                    <h3><span id="p1Name">Mikey</span> <span id="p1Status" class="status-badge"></span><div id="p1Streak" class="streak-label"></div></h3>
+                    <div class="wheel" id="p1Wheel"></div>
                     <div class="controls">
-                        <button onclick="spinTeams(1)">🎲 Two Randoms</button>
+                        <button onclick="spinTeams(1)">🎲 Spin</button>
                         <button onclick="suicide(1)">☠️ Suicide</button>
                     </div>
                     <button class="win-btn" onclick="recordWin(1)">🏆 Record Win</button>
                 </div>
 
                 <div class="player-card">
-                    <h3>
-                        <span id="p2Name">Zach</span> 
-                        <span id="p2Status" class="status-badge"></span>
-                        <div id="p2Streak" class="streak-label"></div>
-                    </h3>
-                    <div class="wheel" id="p2Wheel">
-                        <div class="placeholder-text">Spin to start</div>
-                    </div>
+                    <h3><span id="p2Name">Zach</span> <span id="p2Status" class="status-badge"></span><div id="p2Streak" class="streak-label"></div></h3>
+                    <div class="wheel" id="p2Wheel"></div>
                     <div class="controls">
-                        <button onclick="spinTeams(2)">🎲 Two Randoms</button>
+                        <button onclick="spinTeams(2)">🎲 Spin</button>
                         <button onclick="suicide(2)">☠️ Suicide</button>
                     </div>
                     <button class="win-btn" onclick="recordWin(2)">🏆 Record Win</button>
@@ -78,25 +67,47 @@
 
     <div id="historyTab" class="tab-content" style="display:none;">
         <div class="history-container">
-            <h2>Game Logs</h2>
             <div class="history-filters">
-                <button onclick="filterHistory('mikey_zach')" id="filter_mikey_zach">Mikey vs Zach</button>
-                <button onclick="filterHistory('mikey_jake')" id="filter_mikey_jake">Mikey vs Jake</button>
-                <button onclick="filterHistory('jake_zach')" id="filter_jake_zach">Jake vs Zach</button>
-                <button onclick="filterHistory('all')" id="filter_all" class="active">All Games</button>
+                <button onclick="filterHistory('mikey_zach')" id="filter_mikey_zach">M v Z</button>
+                <button onclick="filterHistory('mikey_jake')" id="filter_mikey_jake">M v J</button>
+                <button onclick="filterHistory('jake_zach')" id="filter_jake_zach">J v Z</button>
+                <button onclick="filterHistory('all')" id="filter_all" class="active">All</button>
             </div>
             <table id="historyTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Matchup</th>
-                        <th>Winner</th>
-                        <th>Teams</th>
-                        <th>Series</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Date</th><th>Match</th><th>Winner</th><th>Game Info</th><th>Series</th></tr></thead>
                 <tbody id="historyBody"></tbody>
             </table>
+        </div>
+    </div>
+
+    <div id="profilesTab" class="tab-content" style="display:none;">
+        <div class="profile-container">
+            <select id="playerSelect" onchange="loadPlayerProfile()">
+                <option value="">Choose Player...</option>
+                <option value="Mikey">Mikey</option>
+                <option value="Zach">Zach</option>
+                <option value="Jake">Jake</option>
+            </select>
+            <div id="profileStats" style="display:none;">
+                <div class="stat-grid">
+                    <div class="stat-card"><label>Record</label><h3 id="statTotalRecord">0-0</h3></div>
+                    <div class="stat-card"><label>Win %</label><h3 id="statWinPct">0%</h3></div>
+                    <div class="stat-card"><label>Home</label><h3 id="statHomeRecord">0-0</h3></div>
+                    <div class="stat-card"><label>Away</label><h3 id="statAwayRecord">0-0</h3></div>
+                    <div class="stat-card"><label>Avg PPG</label><h3 id="statAvgFor">0.0</h3></div>
+                    <div class="stat-card"><label>Avg Opp</label><h3 id="statAvgAgainst">0.0</h3></div>
+                </div>
+                <div class="h2h-section"><h4>Head-to-Head</h4><div id="h2hList"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teamListModal">
+        <div class="modal-content">
+            <h3>Valid Team Names</h3>
+            <input type="text" id="teamSearch" placeholder="Search..." onkeyup="searchTeams()">
+            <ul id="fullTeamList"></ul>
+            <button onclick="toggleTeamList()" style="background:#ff4444; width:100%; padding:10px; margin-top:10px; color:white;">Close</button>
         </div>
     </div>
 
