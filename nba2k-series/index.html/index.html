@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    span.s1 {font: 12.0px 'Apple Color Emoji'}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;NBA 2K Best-of-16&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;link rel="stylesheet" href="style.css"&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;NBA 2K Best-of-16&lt;/h1&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;section class="series-select"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="selectSeries('me_zach')"&gt;Me vs Zach&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="selectSeries('me_jake')"&gt;Me vs Jake&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="selectSeries('jake_zach')"&gt;Jake vs Zach&lt;/button&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;section class="game-type"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h2 id="gameType"&gt;Tap to Spin Game Type&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="spinGameType()"&gt;<span class="s1">🎡</span> Spin Game Type&lt;/button&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;section class="players"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="player"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3 id="p1Name"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="wheel" id="p1Wheel"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="spinTeams(1)"&gt;<span class="s1">🎲</span> Two Randoms&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="suicide(1)"&gt;<span class="s1">☠️</span> Suicide&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p id="p1Result"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="player"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3 id="p2Name"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="wheel" id="p2Wheel"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="spinTeams(2)"&gt;<span class="s1">🎲</span> Two Randoms&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="suicide(2)"&gt;<span class="s1">☠️</span> Suicide&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p id="p2Result"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;section class="score"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h2 id="scoreDisplay"&gt;&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="recordWin(1)"&gt;Player 1 Wins&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="recordWin(2)"&gt;Player 2 Wins&lt;/button&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script src="script.js"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
