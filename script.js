@@ -17,6 +17,9 @@ let currentSeries = "mikey_zach";
 let currentGameType = "live";
 let currentHistoryFilter = "all";
 
+// Global tracker for currently spun teams
+let spunTeams = { p1: null, p2: null };
+
 const players = {
     mikey_zach: ["Mikey", "Zach"],
     mikey_jake: ["Mikey", "Jake"],
@@ -51,93 +54,35 @@ function updateUI() {
 
 function recordWin(pNum) {
     if (prompt("Admin Key:") !== ADMIN_KEY) return;
-    let gScore = prompt("Final (e.g. 102-98):");
-    let t1 = validateTeam(prompt(`Team for ${players[currentSeries][0]}:`));
-    let t2 = validateTeam(prompt(`Team for ${players[currentSeries][1]}:`));
-    if (!t1 || !t2) return alert("Invalid team name.");
+
+    let gScore = prompt("Enter Game Final Score (e.g., 102-98):");
+    if (!gScore) return;
+
+    // PRE-FILL TEAM 1
+    const p1Name = players[currentSeries][0];
+    let t1 = null;
+    while (t1 === null) {
+        let input = prompt(`Enter team used by ${p1Name}:`, spunTeams.p1 || "");
+        if (input === null) return;
+        t1 = validateTeam(input);
+        if (!t1) alert("Invalid Team Name. Check spelling.");
+    }
+
+    // PRE-FILL TEAM 2
+    const p2Name = players[currentSeries][1];
+    let t2 = null;
+    while (t2 === null) {
+        let input = prompt(`Enter team used by ${p2Name}:`, spunTeams.p2 || "");
+        if (input === null) return;
+        t2 = validateTeam(input);
+        if (!t2) alert("Invalid Team Name. Check spelling.");
+    }
 
     pNum === 1 ? seriesData[currentSeries].p1++ : seriesData[currentSeries].p2++;
-    const entry = { date: new Date().toLocaleDateString(), winner: players[currentSeries][pNum-1], teams: `${t1.toUpperCase()} vs ${t2.toUpperCase()}`, gScore: gScore, sScore: `${seriesData[currentSeries].p1}-${seriesData[currentSeries].p2}` };
-    database.ref('scores').set(seriesData);
-    database.ref('history/' + currentSeries).push(entry);
-}
-
-function validateTeam(input) {
-    if(!input) return null;
-    let clean = input.toLowerCase().trim().replace(/\s+/g, '_');
-    return [...teams.live, ...teams.alltime, ...teams.historic].includes(clean) ? clean : null;
-}
-
-function calculateStreaks() {
-    database.ref('history/' + currentSeries).limitToLast(10).once('value', snap => {
-        let logs = []; snap.forEach(c => logs.push(c.val()));
-        updateStreakDisplay("p1Streak", logs, players[currentSeries][0]);
-        updateStreakDisplay("p2Streak", logs, players[currentSeries][1]);
-    });
-}
-
-function updateStreakDisplay(id, logs, name) {
-    let count = 0, type = '';
-    for (let i = logs.length-1; i >= 0; i--) {
-        let cur = (logs[i].winner === name) ? 'W' : 'L';
-        if (type === '') { type = cur; count = 1; }
-        else if (type === cur) count++;
-        else break;
-    }
-    const el = document.getElementById(id);
-    el.innerText = count > 0 ? `${type}${count}` : "";
-    el.className = `streak-label ${type === 'W' ? 'streak-win' : 'streak-loss'}`;
-}
-
-async function loadPlayerProfile() {
-    const pName = document.getElementById("playerSelect").value;
-    if (!pName) return document.getElementById("profileStats").style.display = "none";
-    const snap = await database.ref('history').once('value');
-    const all = snap.val();
-    let stats = { w:0, l:0, hw:0, hl:0, aw:0, al:0, pf:0, pa:0, g:0, h2h:{} };
-
-    if (all) {
-        Object.keys(all).forEach(sKey => {
-            const games = Object.values(all[sKey]);
-            games.forEach((g, idx) => {
-                const p1 = sKey.split('_')[0], p2 = sKey.split('_')[1];
-                const isP1 = p1.toLowerCase() === pName.toLowerCase(), isP2 = p2.toLowerCase() === pName.toLowerCase();
-                if (isP1 || isP2) {
-                    stats.g++;
-                    const isEven = (idx + 1) % 2 === 0;
-                    let isHome = (sKey === "jake_zach") ? (isP2 ? !isEven : isEven) : (isP1 ? isEven : !isEven);
-                    const won = g.winner.toLowerCase() === pName.toLowerCase();
-                    if(won) { stats.w++; isHome ? stats.hw++ : stats.aw++; } else { stats.l++; isHome ? stats.hl++ : stats.al++; }
-                    const opp = (isP1 ? p2 : p1).charAt(0).toUpperCase() + (isP1 ? p2 : p1).slice(1);
-                    if(!stats.h2h[opp]) stats.h2h[opp] = {w:0, l:0};
-                    won ? stats.h2h[opp].w++ : stats.h2h[opp].l++;
-                    const pts = g.gScore.split('-').map(Number);
-                    if(pts.length===2) { stats.pf += isP1 ? pts[0] : pts[1]; stats.pa += isP1 ? pts[1] : pts[0]; }
-                }
-            });
-        });
-    }
-    document.getElementById("profileStats").style.display = "block";
-    document.getElementById("statTotalRecord").innerText = `${stats.w}-${stats.l}`;
-    document.getElementById("statHomeRecord").innerText = `${stats.hw}-${stats.hl}`;
-    document.getElementById("statAwayRecord").innerText = `${stats.aw}-${stats.al}`;
-    document.getElementById("statWinPct").innerText = stats.g > 0 ? ((stats.w/stats.g)*100).toFixed(1)+"%" : "0%";
-    document.getElementById("statAvgFor").innerText = stats.g > 0 ? (stats.pf/stats.g).toFixed(1) : "0.0";
-    document.getElementById("statAvgAgainst").innerText = stats.g > 0 ? (stats.pa/stats.g).toFixed(1) : "0.0";
-    const h2hBox = document.getElementById("h2hList"); h2hBox.innerHTML = "";
-    Object.keys(stats.h2h).forEach(o => { h2hBox.innerHTML += `<div style="display:flex; justify-content:space-between; font-size:0.8rem; margin:5px 0;"><span>vs ${o}</span><span style="color:#ff9800; font-weight:bold;">${stats.h2h[o].w}-${stats.h2h[o].l}</span></div>`; });
-}
-
-function showTab(t) { document.querySelectorAll('.tab-content').forEach(e => e.style.display='none'); document.querySelectorAll('.tab-btn').forEach(e => e.classList.remove('active')); document.getElementById(t+'Tab').style.display='block'; document.getElementById(t+'Btn').classList.add('active'); if(t==='history') loadHistory(); if(t==='profiles') loadPlayerProfile(); }
-function selectSeries(k) { currentSeries = k; document.getElementById("p1Name").innerText = players[k][0]; document.getElementById("p2Name").innerText = players[k][1]; updateUI(); }
-function spinTeams(p) { const pool = teams[currentGameType]; let f = 0, i = setInterval(() => { renderWheel(p, pool[Math.floor(Math.random()*pool.length)]); if(++f>12){ clearInterval(i); renderWheel(p, pool[Math.floor(Math.random()*pool.length)]); }}, 80); }
-function renderWheel(p, t) { const path = currentGameType === 'alltime' ? 'alltime_'+t : t; document.getElementById(`p${p}Wheel`).innerHTML = `<img src="logos/${currentGameType}/${path}.png" style="max-height:120px;" onerror="this.src='logos/placeholder.png'"><div style="font-size:0.7rem; margin-top:5px;">${t.replace(/_/g,' ').toUpperCase()}</div>`; }
-function spinGameType() { const el = document.getElementById("gameTypeDisplay"); let c = 0, i = setInterval(() => { el.innerText = ["LIVE","HISTORIC","ALLTIME"][c++%3]; }, 100); setTimeout(() => { clearInterval(i); currentGameType = Math.random()<0.5 ? 'live' : (Math.random()<0.8 ? 'historic' : 'alltime'); el.innerText = currentGameType.toUpperCase() + " TEAMS"; }, 800); }
-function suicide(p) { document.getElementById('suicideOverlay').classList.add('suicide-active'); spinTeams(p); setTimeout(() => document.getElementById('suicideOverlay').classList.remove('suicide-active'), 1200); }
-function toggleTeamList() { const m = document.getElementById("teamListModal"); m.style.display = m.style.display==='block' ? 'none' : 'block'; if(m.style.display==='block') searchTeams(); }
-function searchTeams() { const q = document.getElementById("teamSearch").value.toLowerCase(); const list = document.getElementById("fullTeamList"); list.innerHTML = ""; [...teams.live, ...teams.alltime, ...teams.historic].sort().forEach(t => { if(t.includes(q)) list.innerHTML += `<li>${t}</li>`; }); }
-function filterHistory(c) { currentHistoryFilter = c; document.querySelectorAll('.history-filters button').forEach(b => b.classList.remove('active')); document.getElementById('filter_'+c).classList.add('active'); loadHistory(); }
-function loadHistory() { const b = document.getElementById("historyBody"); const p = currentHistoryFilter === 'all' ? 'history' : 'history/'+currentHistoryFilter; database.ref(p).once('value', snap => { b.innerHTML = ""; let logs = []; if(currentHistoryFilter==='all') snap.forEach(g => g.forEach(m => logs.push({...m.val(), s:g.key}))); else snap.forEach(m => logs.push({...m.val(), s:currentHistoryFilter})); logs.reverse().forEach(l => { b.innerHTML += `<tr><td>${l.date}</td><td>${l.s.replace('_',' v ')}</td><td>${l.winner}</td><td>${l.teams}<br><b>${l.gScore}</b></td><td>${l.sScore}</td></tr>`; }); }); }
-function resetCurrentSeries() { if(prompt("Key:") === ADMIN_KEY) { seriesData[currentSeries] = {p1:0, p2:0}; database.ref('scores').set(seriesData); } }
-
-selectSeries('mikey_zach');
+    const entry = { 
+        date: new Date().toLocaleDateString(), 
+        winner: players[currentSeries][pNum-1], 
+        teams: `${t1.toUpperCase().replace(/_/g, ' ')} vs ${t2.toUpperCase().replace(/_/g, ' ')}`, 
+        gScore: gScore, 
+        sScore: `${seriesData[currentSeries].p1}-${seriesData[currentSeries].p2}` 
+    };
