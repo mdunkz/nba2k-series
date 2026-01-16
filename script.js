@@ -1,7 +1,7 @@
 // ---------- DATA & STATE ----------
 let currentSeries = "mikey_zach";
 let currentGameType = "live";
-const ADMIN_KEY = "MIKEY26"; // Change this to your preferred password
+const ADMIN_KEY = "md"; // Change this to your preferred password
 
 // Initialize or Load Score Data
 const seriesData = JSON.parse(localStorage.getItem("seriesData")) || {
