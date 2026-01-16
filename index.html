@@ -14,53 +14,94 @@
 
     <header>
         <h1>NBA 2K26 SERIES</h1>
+        <div id="gameNumberLabel">GAME 1</div>
+        
         <div class="series-select">
             <button onclick="selectSeries('mikey_zach')">Mikey vs Zach</button>
             <button onclick="selectSeries('mikey_jake')">Mikey vs Jake</button>
             <button onclick="selectSeries('jake_zach')">Jake vs Zach</button>
         </div>
+
         <div class="scoreboard">
             <h2 id="scoreDisplay">0 - 0</h2>
             <button class="reset-btn" onclick="resetCurrentSeries()">Reset Series</button>
         </div>
+
+        <nav class="tab-system">
+            <button onclick="showTab('live')" id="liveBtn" class="tab-btn active">Live Tracker</button>
+            <button onclick="showTab('history')" id="historyBtn" class="tab-btn">Game History</button>
+        </nav>
     </header>
 
-    <main>
-        <div class="game-type-section">
-            <h2 id="gameTypeDisplay">SPIN GAME TYPE</h2>
-            <button class="spin-main" onclick="spinGameType()">🎡 Spin Type</button>
+    <div id="liveTab" class="tab-content">
+        <main>
+            <div class="game-type-section">
+                <h2 id="gameTypeDisplay">SPIN GAME TYPE</h2>
+                <button class="spin-main" onclick="spinGameType()">🎡 Spin Type</button>
+            </div>
+
+            <section class="players">
+                <div class="player-card">
+                    <h3>
+                        <span id="p1Name">Mikey</span> 
+                        <span id="p1Status" class="status-badge"></span>
+                        <div id="p1Streak" class="streak-label"></div>
+                    </h3>
+                    <div class="wheel" id="p1Wheel">
+                        <div class="placeholder-text">Spin to start</div>
+                    </div>
+                    <div class="controls">
+                        <button onclick="spinTeams(1)">🎲 Two Randoms</button>
+                        <button onclick="suicide(1)">☠️ Suicide</button>
+                    </div>
+                    <button class="win-btn" onclick="recordWin(1)">🏆 Record Win</button>
+                </div>
+
+                <div class="player-card">
+                    <h3>
+                        <span id="p2Name">Zach</span> 
+                        <span id="p2Status" class="status-badge"></span>
+                        <div id="p2Streak" class="streak-label"></div>
+                    </h3>
+                    <div class="wheel" id="p2Wheel">
+                        <div class="placeholder-text">Spin to start</div>
+                    </div>
+                    <div class="controls">
+                        <button onclick="spinTeams(2)">🎲 Two Randoms</button>
+                        <button onclick="suicide(2)">☠️ Suicide</button>
+                    </div>
+                    <button class="win-btn" onclick="recordWin(2)">🏆 Record Win</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="historyTab" class="tab-content" style="display:none;">
+        <div class="history-container">
+            <h2>Game Logs</h2>
+            <div class="history-filters">
+                <button onclick="filterHistory('mikey_zach')" id="filter_mikey_zach">Mikey vs Zach</button>
+                <button onclick="filterHistory('mikey_jake')" id="filter_mikey_jake">Mikey vs Jake</button>
+                <button onclick="filterHistory('jake_zach')" id="filter_jake_zach">Jake vs Zach</button>
+                <button onclick="filterHistory('all')" id="filter_all" class="active">All Games</button>
+            </div>
+            <table id="historyTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Matchup</th>
+                        <th>Winner</th>
+                        <th>Teams</th>
+                        <th>Series</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+            </table>
         </div>
-
-        <section class="players">
-            <div class="player-card">
-                <h3 id="p1Name">Mikey</h3>
-                <div class="wheel" id="p1Wheel">
-                    <div class="placeholder-text">Waiting...</div>
-                </div>
-                <div class="controls">
-                    <button onclick="spinTeams(1)">🎲 Two Randoms</button>
-                    <button onclick="suicide(1)">☠️ Suicide</button>
-                </div>
-                <button class="win-btn" onclick="recordWin(1)">🏆 Record Win</button>
-            </div>
-
-            <div class="player-card">
-                <h3 id="p2Name">Zach</h3>
-                <div class="wheel" id="p2Wheel">
-                    <div class="placeholder-text">Waiting...</div>
-                </div>
-                <div class="controls">
-                    <button onclick="spinTeams(2)">🎲 Two Randoms</button>
-                    <button onclick="suicide(2)">☠️ Suicide</button>
-                </div>
-                <button class="win-btn" onclick="recordWin(2)">🏆 Record Win</button>
-            </div>
-        </section>
-    </main>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
     <script src="script.js"></script>
 </body>
 </html>
