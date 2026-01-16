@@ -32,7 +32,7 @@
         </div>
 
         <section class="players">
-            <div class="player">
+            <div class="player-card">
                 <h3 id="p1Name">Mikey</h3>
                 <div class="wheel" id="p1Wheel">
                     <div class="placeholder-text">Waiting...</div>
@@ -44,7 +44,7 @@
                 <button class="win-btn" onclick="recordWin(1)">🏆 Record Win</button>
             </div>
 
-            <div class="player">
+            <div class="player-card">
                 <h3 id="p2Name">Zach</h3>
                 <div class="wheel" id="p2Wheel">
                     <div class="placeholder-text">Waiting...</div>
@@ -57,6 +57,9 @@
             </div>
         </section>
     </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <script src="script.js"></script>
 </body>
