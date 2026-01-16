@@ -1,8 +1,3 @@
-// ============================================================
-// 1. FIREBASE CONFIGURATION
-// PASTE YOUR SETTINGS FROM THE FIREBASE CONSOLE BELOW!
-// ============================================================
-
 const firebaseConfig = {
   apiKey: "AIzaSyCbjAqW0inyoxW38SRrbfMZ3IR5ryWtjxw",
   authDomain: "nba-tracker-86afd.firebaseapp.com",
@@ -17,10 +12,6 @@ const firebaseConfig = {
 // INITIALIZE FIREBASE
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-
-// ============================================================
-// 2. APP STATE & DATA
-// ============================================================
 
 let currentSeries = "mikey_zach";
 let currentGameType = "live";
