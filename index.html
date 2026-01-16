@@ -14,13 +14,11 @@
 
     <header>
         <h1>NBA 2K26 SERIES</h1>
-        
         <div class="series-select">
             <button onclick="selectSeries('mikey_zach')">Mikey vs Zach</button>
             <button onclick="selectSeries('mikey_jake')">Mikey vs Jake</button>
             <button onclick="selectSeries('jake_zach')">Jake vs Zach</button>
         </div>
-
         <div class="scoreboard">
             <h2 id="scoreDisplay">0 - 0</h2>
             <button class="reset-btn" onclick="resetCurrentSeries()">Reset Series</button>
@@ -34,37 +32,31 @@
         </div>
 
         <section class="players">
-            <div class="player-card" id="player1Card">
+            <div class="player">
                 <h3 id="p1Name">Mikey</h3>
                 <div class="wheel" id="p1Wheel">
                     <div class="placeholder-text">Waiting...</div>
                 </div>
                 <div class="controls">
-                    <button class="spin-team-btn" onclick="spinTeams(1)">🎲 Two Randoms</button>
-                    <button class="suicide-btn" onclick="suicide(1)">☠️ Suicide</button>
+                    <button onclick="spinTeams(1)">🎲 Two Randoms</button>
+                    <button onclick="suicide(1)">☠️ Suicide</button>
                 </div>
                 <button class="win-btn" onclick="recordWin(1)">🏆 Record Win</button>
             </div>
 
-            <div class="vs-divider">VS</div>
-
-            <div class="player-card" id="player2Card">
+            <div class="player">
                 <h3 id="p2Name">Zach</h3>
                 <div class="wheel" id="p2Wheel">
                     <div class="placeholder-text">Waiting...</div>
                 </div>
                 <div class="controls">
-                    <button class="spin-team-btn" onclick="spinTeams(2)">🎲 Two Randoms</button>
-                    <button class="suicide-btn" onclick="suicide(2)">☠️ Suicide</button>
+                    <button onclick="spinTeams(2)">🎲 Two Randoms</button>
+                    <button onclick="suicide(2)">☠️ Suicide</button>
                 </div>
                 <button class="win-btn" onclick="recordWin(2)">🏆 Record Win</button>
             </div>
         </section>
     </main>
-
-    <footer>
-        <p>NBA 2K26 Series Tracker v2.0 | Weighted Odds Enabled</p>
-    </footer>
 
     <script src="script.js"></script>
 </body>
