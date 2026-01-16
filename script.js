@@ -51,17 +51,30 @@ function updateScore() {
 }
 
 function spinGameType() {
-    const types = ["live", "historic", "alltime"];
     const display = document.getElementById("gameTypeDisplay");
+    
+    // Visual "Spinning" Animation
     let count = 0;
     const interval = setInterval(() => {
-        display.innerText = types[count % 3].toUpperCase();
+        const tempTypes = ["LIVE", "HISTORIC", "ALLTIME"];
+        display.innerText = tempTypes[count % 3];
         count++;
     }, 100);
 
     setTimeout(() => {
         clearInterval(interval);
-        currentGameType = types[Math.floor(Math.random() * 3)];
+        
+        // Weighted Logic (50% Live, 30% Historic, 20% All-Time)
+        const rand = Math.random() * 100; // Generate a number from 0.0 to 99.9
+        
+        if (rand < 50) {
+            currentGameType = "live";      // 50% chance (0 to 49.9)
+        } else if (rand < 80) {
+            currentGameType = "historic";  // 30% chance (50 to 79.9)
+        } else {
+            currentGameType = "alltime";   // 20% chance (80 to 99.9)
+        }
+        
         display.innerText = currentGameType.toUpperCase() + " TEAMS";
     }, 1000);
 }
