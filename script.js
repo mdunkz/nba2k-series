@@ -15,7 +15,7 @@ const database = firebase.database();
 
 let currentSeries = "mikey_zach";
 let currentGameType = "live";
-const ADMIN_KEY = "md"; // Your password for updating scores
+const ADMIN_KEY = "Md"; // Your password for updating scores
 
 let seriesData = {
     mikey_zach: { p1: 0, p2: 0 },
