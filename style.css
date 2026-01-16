@@ -1,107 +1,65 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: #121212;
     color: white;
     text-align: center;
     margin: 0;
-    padding-bottom: 50px;
+    overflow-x: hidden;
 }
 
-header {
-    background: #000;
-    padding: 20px;
-    border-bottom: 3px solid #ff9800;
-}
-
-.series-select {
-    margin: 15px 0;
-}
-
-button {
-    cursor: pointer;
-    transition: 0.2s;
-    font-weight: bold;
-}
-
-.series-select button {
-    background: #333;
-    color: white;
-    border: 1px solid #555;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-.series-select button:hover {
-    background: #ff9800;
-    color: black;
-}
-
-#scoreDisplay {
-    font-size: 2.5rem;
-    color: #ff9800;
-    margin: 10px 0;
-}
-
-.game-type-section {
-    margin: 30px 0;
-    padding: 20px;
-    background: #1e1e1e;
-}
-
-.spin-main {
-    background: #ff9800;
-    font-size: 1.2rem;
-    padding: 15px 30px;
-    border-radius: 50px;
-    border: none;
-}
-
-.players {
-    display: flex;
+/* SUICIDE OVERLAY */
+#suicideOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none; 
     justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
+    align-items: center;
+    z-index: 9999;
+    pointer-events: none;
 }
 
-.player {
-    background: #1e1e1e;
-    padding: 20px;
-    border-radius: 15px;
-    width: 300px;
-    border: 1px solid #333;
+.skull-icon {
+    font-size: 250px;
+    filter: drop-shadow(0 0 30px black);
 }
 
+@keyframes suicideFlash {
+    0% { background-color: rgba(255, 0, 0, 0.8); }
+    50% { background-color: rgba(0, 0, 0, 0.6); }
+    100% { background-color: rgba(255, 0, 0, 0.8); }
+}
+
+.suicide-active {
+    display: flex !important;
+    animation: suicideFlash 0.15s infinite;
+}
+
+/* WHEEL & ANIMATIONS */
 .wheel {
-    height: 180px;
+    height: 200px;
     background: #000;
-    border: 2px solid #ff9800;
-    border-radius: 10px;
+    border: 3px solid #ff9800;
+    border-radius: 15px;
     margin: 15px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    transition: transform 0.2s;
 }
 
 .wheel img {
-    max-height: 100px;
+    max-height: 110px;
     width: auto;
-    margin-bottom: 10px;
 }
 
-.team-name {
-    font-weight: bold;
-    color: #ff9800;
+.winner-pop {
+    animation: winnerPop 0.5s ease-out;
 }
 
-.win-btn {
-    margin-top: 20px;
-    width: 100%;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-}
+@keyframes winnerPop {
+    0% { transform: scale(1); }
+    50% {
